@@ -1,0 +1,17 @@
+{
+    "name": "janschumann/classloader_composer",
+    "type": "drupal-module",
+    "description": "A simple module to autoload classes known to composer.",
+    "keywords": ["drupal", "web"],
+    "homepage": "https://github.com/janschumann/drupal-composer-classloader",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jan Schumann",
+            "homepage": "https://github.com/janschumann"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    }
+}

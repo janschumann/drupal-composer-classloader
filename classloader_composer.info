@@ -1,0 +1,8 @@
+name = Classloader extension for composer
+description = A simple module to autoload classes known to composer.
+core = 7.x
+php = 5.3.3
+; Ensure to be loaded after classloader
+weight = -750
+
+dependencies[] = classloader
