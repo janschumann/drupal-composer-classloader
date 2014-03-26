@@ -44,7 +44,6 @@ function classloader_composer_register() {
     }
 
     $loader = require_once $autoload_file;
-    $loader->register();
     if (function_exists('apc_exists')) {
       $cachedLoader  = new ApcClassLoader('drupal', $loader);
       $cachedLoader->register();
