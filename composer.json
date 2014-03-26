@@ -17,6 +17,6 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/class-loader": "~2.4.x"
+        "symfony/class-loader": "2.4.x"
     }
 }
