@@ -43,7 +43,7 @@ function classloader_composer_register() {
       throw new \RuntimeException('Composer autoload file not found: ' . $autoload_file);
     }
 
-    $loader = require_once $autoload_file;
+    $loader = require $autoload_file;
     if (function_exists('apc_exists')) {
       $cachedLoader  = new ApcClassLoader('drupal', $loader);
       $cachedLoader->register();
