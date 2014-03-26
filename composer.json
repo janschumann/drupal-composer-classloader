@@ -9,9 +9,14 @@
         {
             "name": "Jan Schumann",
             "homepage": "https://github.com/janschumann"
+        },
+        {
+            "name": "Mike Lohmann",
+            "homepage": "http://www.deck36.de"
         }
     ],
     "require": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.3",
+        "symfony/class-loader": "~2.4.x"
     }
 }

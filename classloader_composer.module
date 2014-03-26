@@ -1,40 +1,32 @@
 <?php
+use Symfony\Component\ClassLoader\ApcClassLoader;
 
 /**
  * Implements hook_boot().
- *
- * Make sure classes can be loaded during hook_init()
  */
 function classloader_composer_boot() {
-  _classloader_composer_register();
+  classloader_composer_register();
+}
+
+/**
+ * Implements hook_init().
+ */
+function classloader_composer_init() {
+  classloader_composer_register();
 }
 
 /**
  * Implements hook_modules_installed().
  */
 function classloader_composer_modules_installed(array $modules) {
-  _classloader_composer_register();
-}
-
-/**
- * Implements hook_modules_installed().
- */
-function classloader_composer_uninstalled(array $modules) {
-  _classloader_composer_register();
+  classloader_composer_register();
 }
 
 /**
  * Implements hook_modules_enabled().
  */
-function classloader_composer_enabled(array $modules) {
-  _classloader_composer_register();
-}
-
-/**
- * Implements hook_modules_disabled().
- */
-function classloader_composer_disabled($modules) {
-  _classloader_composer_register();
+function classloader_composer_modules_enabled(array $modules) {
+  classloader_composer_register();
 }
 
 /**
@@ -42,25 +34,20 @@ function classloader_composer_disabled($modules) {
  *
  * @throws RuntimeException if composer autoloading file cannot be found
  */
-function _classloader_composer_register() {
+function classloader_composer_register() {
   static $registered = false;
 
   if (!$registered) {
-    // This file is created by composer when installing the dependencies of the logging-component with it.
-    // To use it with the allready installed classloader the namespace is registered.
-    $autoload_file = DRUPAL_ROOT . '/../vendor/composer/autoload_namespaces.php';
+    $autoload_file = DRUPAL_ROOT . '/../vendor/autoload.php';
     if (!file_exists($autoload_file)) {
       throw new \RuntimeException('Composer autoload file not found: ' . $autoload_file);
     }
 
-    $loader = drupal_classloader();
-    $map = require $autoload_file;
-
-    // changes in api of Classloader between 2.0.x and 2.2.x
-    if (method_exists($loader, 'addPrefixes')) {
-      $loader->addPrefixes($map);
-    } else {
-      $loader->registerNamespaces($map);
+    $loader = require_once $autoload_file;
+    if (function_exists('apc_exists')) {
+      $cachedLoader  = new ApcClassLoader('drupal', $loader);
+      $cachedLoader->register();
+      $loader->unregister();
     }
 
     $registered = true;
