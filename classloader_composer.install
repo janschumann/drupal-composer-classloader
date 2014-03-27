@@ -10,11 +10,11 @@
  */
 function classloader_composer_install() {
   // Activate the class loader.
-  classloader_composer_register();
+  drupal_classloader();
 }
 
 /**
- * Implements hook_enable().
+ * Implements @see hook_enable().
  */
 function classloader_composer_enable() {
   // If classloader was only disabled and is re-enabled - possibly in parallel
@@ -23,6 +23,6 @@ function classloader_composer_enable() {
   // In case classloader module was not installed before, this will effectively
   // run the class loader initialization and entire module registration twice,
   // but there is no way around that without diverging from the D8 code.
-  classloader_composer_install();
+  drupal_classloader();
 }
 
