@@ -1,22 +1,40 @@
 <?php
 
 /**
+ * Implementation of @see hook_menu()
+ */
+function classloader_composer_menu() {
+  $items = array();
+
+  $items['admin/config/development/classloader_composer'] = array(
+    'title' => 'Composer Autoload settings',
+    'description' => "Configure Composer Autoload settings.",
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('classloader_composer_admin_settings_form'),
+    'access arguments' => array('administer classloader'),
+    'weight' => 10,
+    'file' => 'classloader_composer.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
  * Retrieves the classloader
  */
 function drupal_classloader() {
   static $loader;
 
   if (!$loader) {
-    $autoload_file = DRUPAL_ROOT . '/../vendor/autoload.php';
-    if (!file_exists($autoload_file)) {
-      throw new \RuntimeException('Composer autoload file not found: ' . $autoload_file);
-    }
+    $autoload_file = variable_get('composer_vendor_dir', DRUPAL_ROOT . '/../vendor') . '/autoload.php';
+    if (file_exists($autoload_file)) {
+      $loader = require $autoload_file;
 
-    $loader = require $autoload_file;
-    if (extension_loaded('apc')) {
-      $cachedLoader  = new \Symfony\Component\ClassLoader\ApcClassLoader('drupal', $loader);
-      $cachedLoader->register();
-      $loader->unregister();
+      if (extension_loaded('apc') && variable_get('composer_use_apc', false)) {
+        $cachedLoader = new \Symfony\Component\ClassLoader\ApcClassLoader('drupal', $loader);
+        $cachedLoader->register();
+        $loader->unregister();
+      }
     }
   }
 
