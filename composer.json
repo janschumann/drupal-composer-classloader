@@ -18,6 +18,6 @@
     "require": {
         "php": ">=5.3.3",
 
-        "symfony/class-loader": "@stable"
+        "symfony/class-loader": "~2.4"
     }
 }
