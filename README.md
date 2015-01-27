@@ -9,8 +9,12 @@ A simple module enables [composer autoloading](http://getcomposer.org) for drupa
 
 This project can be checked out with [composer](http://getcomposer.org).
 
-```
-require: "janschumann/classloader_composer": "*"
+```json
+{
+  "require": {
+    "janschumann/classloader_composer": "*"
+  }
+}
 ```
 
 ## Confguration
@@ -21,13 +25,13 @@ Only if you have changed the ```vendor-dir``` configuration option in your ```co
 
 **Via shell script:**
 
-```
+```sh
 $ drush vset composer_vendor_dir <path/to/vendor/dir>
 ```
 
 **Via php:**
 
-```
+```php
 variable_set('composer_vendor_dir', '<path/to/vendor/dir>');
 ```
 
@@ -35,7 +39,7 @@ variable_set('composer_vendor_dir', '<path/to/vendor/dir>');
 
 After this module is required in your project´s ```composer.json``` file, composer will autoload all classes added to the ```composer.json``` autoload section:
 
-```
+```json
 {
     "autoload": {
         "psr-0": {
