@@ -9,6 +9,13 @@
  * Implements hook_install().
  */
 function classloader_composer_install() {
+  // classloader has to be one of the first modules.
+  db_update('system')
+    ->fields(array('weight' =>  -10000))
+    ->condition('name', 'classloader_composer')
+    ->condition('type', 'module')
+    ->execute();
+
   // Activate the class loader.
   drupal_classloader();
 }
@@ -17,12 +24,6 @@ function classloader_composer_install() {
  * Implements @see hook_enable().
  */
 function classloader_composer_enable() {
-  // If classloader was only disabled and is re-enabled - possibly in parallel
-  // with other modules that depend on it - then we need to ensure that the
-  // class loader is initialized.
-  // In case classloader module was not installed before, this will effectively
-  // run the class loader initialization and entire module registration twice,
-  // but there is no way around that without diverging from the D8 code.
-  drupal_classloader();
+  classloader_composer_install();
 }
 
