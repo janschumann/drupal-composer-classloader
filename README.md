@@ -48,3 +48,7 @@ After this module is required in your project´s ```composer.json``` file, compo
     }
 }
 ```
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/janschumann/drupal-composer-classloader/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
